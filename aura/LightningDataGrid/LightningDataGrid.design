@@ -1,0 +1,6 @@
+<design:component >
+	<design:attribute name="sobject" label="sObject" description="Name of sObject to query" />
+	<design:attribute name="fields" label="Field List" description="Comma separated list of fields to retrieve in SOQL query" />
+    <design:attribute name="filter" label="Query Filter" description="Used to filter records in the SOQL query (DO NOT INCLUDE WHERE CLAUSE ie, LastName Like 'B%')" />
+    <design:attribute name="order" label="Order" description="Used to Order the query results (DO NOT INCLUDE ORDER BY CLAUSE)" />
+</design:component>

@@ -1,0 +1,52 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+				controller="LightningDataGridController" access="global" 
+                description="Generic Component used to display any sObject data in a read-only Lightning Grid.">
+    
+    <aura:attribute name="sobject" type="string" access="global" default="Account" description="name of sObject to query" />
+    <aura:attribute name="fields" type="string" access="global" default="Name, AccountNumber, AnnualRevenue" description="comma separated list of fields to retrieve in SOQL query" />
+    <aura:attribute name="filter" type="string" access="global" default='' description="used to filter records in the SOQL query" />
+    <aura:attribute name="order" type="string" access="global" default='' description="field(s) and direction used to order the SOQL query by" />
+	<aura:attribute name="gridData" type="object" description="represents data to populate table" />   
+	<aura:attribute name="errorMsg" type="string" description="Error message" /> 
+    <aura:attribute name="isError" type="boolean" default="false" description="Used to conditionally render an error message or table of data" />
+	<aura:attribute name="pageSize" type="integer" default="5"/>
+    <aura:attribute name="page" type="integer"/>
+    <aura:attribute name="pages" type="integer"/>
+    <aura:attribute name="total" type="integer"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>   
+    
+    <aura:if isTrue="{!v.isError}" >
+    	<ui:message title="Error" severity="error" closable="true"> 
+    		The following error has occurred: {!v.errorMsg}
+    	</ui:message>
+    
+    <aura:set attribute="else">
+		<lightning:layout horizontalAlign="spread" multipleRows="true">
+			<lightning:layoutItem flexibility="grow">
+				<table class="slds-table slds-table--bordered">   
+					<thead>
+						<tr class="slds-text-heading--label">            	
+			            	<aura:iteration items="{!v.gridData.headers}" var="col">                     
+								<th class="{!col.cssClass}"> {!col.title} </th>  
+			                </aura:iteration>                
+			            </tr>        	 
+			        </thead>
+					<tbody>
+			            <aura:iteration items="{!v.gridData.rows}" var="row">
+							<tr class="slds-hint-parent"> 
+			                	<aura:iteration items="{!row.cols}" var="col" indexVar="idx">                         
+									<td class="{!col.cssClass}">{!col.value}</td> 
+			                    </aura:iteration>
+			                </tr>
+			             </aura:iteration>              
+			        </tbody>    
+		    	</table>
+			</lightning:layoutItem>
+		</lightning:layout>
+        <c:Paginator page="{!v.page}" pages="{!v.pages}" total="{!v.total}" sobject="{!v.sobject}"
+                         pagePrevious="{!c.onPagePrevious}" pageNext="{!c.onPageNext}"/>
+	</aura:set>
+	</aura:if>
+	
+</aura:component>
