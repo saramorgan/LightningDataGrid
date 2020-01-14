@@ -1,6 +1,6 @@
 # Lightning Data Grid
 
-Generic Component used to display any sObject data in a read-only Lightning Grid. It utilizes the following attributes to make the component configureable:
+Generic Aura Component used to display any sObject data in a read-only Lightning Grid. It utilizes the following attributes to make the component configureable:
 
 Attribute Name  |  Description                                                                                      | Default
 --------------  |  ----------------------------------------------------------------------------------------------   | -------
